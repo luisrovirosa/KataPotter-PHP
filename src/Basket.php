@@ -6,14 +6,20 @@ class Basket
 {
     /** @var Book[] */
     private $books;
+    /**
+     * @var Discounts
+     */
+    private $discounts;
 
     /**
      * Basket constructor.
      * @param Book[] $books
+     * @param Discounts $discounts
      */
-    public function __construct(array $books)
+    public function __construct(array $books, Discounts $discounts)
     {
         $this->books = $books;
+        $this->discounts = $discounts;
     }
 
     public function price()
@@ -26,7 +32,7 @@ class Basket
      */
     private function normalPrice()
     {
-        return $this->numberOfBooks() * 8;
+        return $this->numberOfBooks() * Book::PRICE;
     }
 
     /**
@@ -34,12 +40,7 @@ class Basket
      */
     private function discount()
     {
-        $discount = 0;
-        if ($this->numberOfBooks() == 2 && $this->books[0] != $this->books[1]) {
-            $discount = 5 / 100;
-        }
-
-        return $discount * $this->normalPrice();
+        return $this->discounts->calculate($this->books);
     }
 
     /**

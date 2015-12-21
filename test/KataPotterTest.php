@@ -4,6 +4,7 @@ namespace KataPotter\Test;
 
 use KataPotter\Basket;
 use KataPotter\Book;
+use KataPotter\Discounts;
 
 class KataPotterShould extends \PHPUnit_Framework_TestCase
 {
@@ -109,7 +110,7 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
     {
         $books = $this->books($bookNumbers);
 
-        return new Basket($books);
+        return new Basket($books, new Discounts());
     }
 
     /**

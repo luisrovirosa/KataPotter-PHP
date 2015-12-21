@@ -4,6 +4,7 @@ namespace KataPotter;
 
 class Book
 {
+    const PRICE = 8;
     /** @var string */
     private $name;
 
