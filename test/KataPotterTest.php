@@ -6,6 +6,7 @@ use KataPotter\Basket;
 use KataPotter\Book;
 use KataPotter\Discounts;
 use KataPotter\TenPercentDiscountOnThreeDifferentBooks;
+use KataPotter\TwentyPercentDiscountOnFourDifferentBooks;
 
 class KataPotterShould extends \PHPUnit_Framework_TestCase
 {
@@ -46,7 +47,7 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
             [[5]],
             [[5, 5]],
             [[5, 5, 5]],
-            [[5, 5, 5, 2]],
+            [[5, 5, 5, 5]],
             [[5, 5, 5, 5, 5]],
         ];
     }
@@ -91,7 +92,13 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
     {
         $this->assertBasketCost([1, 2, 3], 3 * 8 * 0.9);
     }
-    // Four different books has a 20% of discount
+
+    /** @test */
+    public function four_different_books_has_a_20_percent_of_discount()
+    {
+        $this->assertBasketCost([1, 2, 3, 4], 4 * 8 * 0.8);
+    }
+
     // Five different books has a 25% of discount
     // Three different books and one duplicated get the 20% of discount on the 3 different books
     // 2 copies of first book, 2 copies of second, 2 of the third, 1 of fourth and 1 of the fifth costs 51.2 €
@@ -118,6 +125,7 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
         return new Basket(
             $books, new Discounts(
                 [
+                    new TwentyPercentDiscountOnFourDifferentBooks(),
                     new TenPercentDiscountOnThreeDifferentBooks(),
                     new FivePercentDiscountOnTwoDifferentBooks(),
                     new NoDiscount()
