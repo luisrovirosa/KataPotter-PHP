@@ -110,7 +110,14 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
     {
         $books = $this->books($bookNumbers);
 
-        return new Basket($books, new Discounts());
+        return new Basket(
+            $books, new Discounts(
+            [
+                new FivePercentDiscountOnTwoDifferentBooks(),
+                new NoDiscount()
+            ]
+        )
+        );
     }
 
     /**
