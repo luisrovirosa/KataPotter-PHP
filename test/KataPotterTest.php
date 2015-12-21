@@ -11,18 +11,40 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
     /** @test */
     public function one_book_costs_8_euros()
     {
-        $book = new Book(1);
-        $basket = new Basket([$book]);
+        $basket = $this->createBasketWithBooks([1]);
         $this->assertEquals(8, $basket->price());
     }
 
     /** @test */
     public function two_copies_of_the_same_book_costs_16_euros()
     {
-        $book1 = new Book(1);
-        $book2 = new Book(1);
-        $basket = new Basket([$book1, $book2]);
+        $basket = $this->createBasketWithBooks([1, 1]);
         $this->assertEquals(16, $basket->price());
+    }
+
+    /**
+     * @param $bookNumbers
+     * @return Basket
+     */
+    private function createBasketWithBooks($bookNumbers)
+    {
+        $books = $this->books($bookNumbers);
+
+        return new Basket($books);
+    }
+
+    /**
+     * @param array $bookNumbers
+     * @return Book[]
+     */
+    private function books(array $bookNumbers)
+    {
+        $books = [];
+        foreach ($bookNumbers as $number) {
+            $books[] = new Book($number);
+        }
+
+        return $books;
     }
     // Three copies of the same book costs 24 €
     // Four copies of the same book costs 32 €
