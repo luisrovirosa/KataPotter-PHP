@@ -8,18 +8,48 @@ use KataPotter\Book;
 class KataPotterShould extends \PHPUnit_Framework_TestCase
 {
 
-    /** @test */
-    public function one_book_costs_8_euros()
+    /**
+     * @dataProvider noDiscountBooks
+     * @test
+     */
+    public function same_book_has_no_discount($bookNumbers, $expectedPrice)
     {
-        $basket = $this->createBasketWithBooks([1]);
-        $this->assertEquals(8, $basket->price());
+        $basket = $this->createBasketWithBooks($bookNumbers);
+        $this->assertEquals(
+            $expectedPrice, $basket->price(),
+            "The books " . json_encode($bookNumbers) . " should cost $expectedPrice"
+        );
     }
 
-    /** @test */
-    public function two_copies_of_the_same_book_costs_16_euros()
+    public function noDiscountBooks()
     {
-        $basket = $this->createBasketWithBooks([1, 1]);
-        $this->assertEquals(16, $basket->price());
+        return [
+            [[1], 8],
+            [[1, 1], 16],
+            [[1, 1, 1], 24],
+            [[1, 1, 1, 1], 32],
+            [[1, 1, 1, 1, 1], 40],
+            [[2], 8],
+            [[2, 2], 16],
+            [[2, 2, 2], 24],
+            [[2, 2, 2, 2], 32],
+            [[2, 2, 2, 2, 2], 40],
+            [[3], 8],
+            [[3, 3], 16],
+            [[3, 3, 3], 24],
+            [[3, 3, 3, 3], 32],
+            [[3, 3, 3, 3, 3], 40],
+            [[4], 8],
+            [[4, 4], 16],
+            [[4, 4, 4], 24],
+            [[4, 4, 4, 4], 32],
+            [[4, 4, 4, 4, 4], 40],
+            [[5], 8],
+            [[5, 5], 16],
+            [[5, 5, 5], 24],
+            [[5, 5, 5, 2], 32],
+            [[5, 5, 5, 5, 5], 40],
+        ];
     }
 
     /**
@@ -46,9 +76,6 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
 
         return $books;
     }
-    // Three copies of the same book costs 24 €
-    // Four copies of the same book costs 32 €
-    // Five copies of the same book costs 40 €
     // Two different books has a 5% of discount
     // Three different books has a 10% of discount
     // Four different books has a 20% of discount
