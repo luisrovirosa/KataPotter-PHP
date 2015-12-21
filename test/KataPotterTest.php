@@ -106,11 +106,25 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
         $this->assertBasketCost([1, 2, 3, 4, 5], 5 * 8 * 0.75);
     }
 
-    /** @test */
-    public function three_different_books_and_one_duplicated_get_the_twenty_percent_of_discount_on_the_three_different_books(
-    )
+    /**
+     * @dataProvider differentAndSameBooks
+     * @test
+     */
+    public function different_books_and_one_duplicated_get_the_discount_on_the_different_books(
+        $bookNumbers, $discount
+    ) {
+        $expectedPrice = (8 * (count($bookNumbers) - 1) * $discount) + 8;
+        $this->assertBasketCost($bookNumbers, $expectedPrice);
+    }
+
+    public function differentAndSameBooks()
     {
-        $this->assertBasketCost([1, 2, 3, 3], 3 * 8 * .9 + 8);
+        return [
+            [[1, 2, 2], .95],
+            [[1, 2, 3, 3], .9],
+            [[1, 2, 3, 4, 4], .8],
+            //[[1, 2, 3, 4, 5, 5], 5 * 8 * .75 + 8],
+        ];
     }
     // 2 copies of first book, 2 copies of second, 2 of the third, 1 of fourth and 1 of the fifth costs 51.2 €
 

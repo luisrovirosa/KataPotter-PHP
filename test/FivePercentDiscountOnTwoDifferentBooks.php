@@ -8,11 +8,22 @@ class FivePercentDiscountOnTwoDifferentBooks implements Discount
 {
     public function match($books)
     {
-        return (count($books) == 2 && $books[0] != $books[1]);
+        return $this->hasTwoDifferentBooks($books);
     }
 
     public function amount($books)
     {
         return 5 / 100 * 2 * Book::PRICE;
+    }
+
+    private function hasTwoDifferentBooks($books)
+    {
+        $bookNames = array_map(
+            function (Book $book) {
+                return $book->name();
+            }, $books
+        );
+
+        return count(array_unique($bookNames)) == 2;
     }
 }

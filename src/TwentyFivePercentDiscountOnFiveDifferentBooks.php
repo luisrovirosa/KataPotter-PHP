@@ -19,9 +19,12 @@ class TwentyFivePercentDiscountOnFiveDifferentBooks implements Discount
 
     private function hasFiveDifferentBooks($books)
     {
-        return $books[0] != $books[1]
-        && $books[1] != $books[2]
-        && $books[2] != $books[3]
-        && $books[3] != $books[4];
+        $bookNames = array_map(
+            function (Book $book) {
+                return $book->name();
+            }, $books
+        );
+
+        return count(array_unique($bookNames)) == 5;
     }
 }
