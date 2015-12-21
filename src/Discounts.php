@@ -20,9 +20,7 @@ class Discounts
 
     public function calculate($books)
     {
-        $discount = $this->selectDiscount($books);
-
-        return $discount->amount($books);
+        return $this->calculateBestDiscount($books);
     }
 
     private function selectDiscount($books)
@@ -33,5 +31,41 @@ class Discounts
             }
         }
         throw new \Exception('No discount available');
+    }
+
+    private function calculateBestDiscount($books)
+    {
+        $groups = $this->generateGroups($books);
+        $discounts = array_map(
+            function ($group) {
+                return $this->calculateGroupDiscount($group);
+            }, $groups
+        );
+
+        return max($discounts);
+    }
+
+    private function calculateGroupDiscount($group)
+    {
+        $discounts = array_map(
+            function ($books) {
+                $discount = $this->selectDiscount($books);
+
+                return $discount->amount($books);
+            },
+            $group
+        );
+
+        return array_sum($discounts);
+    }
+
+    private function generateGroups($books)
+    {
+        // FIXME: Not done
+        $groups = [
+            [$books],
+        ];
+
+        return $groups;
     }
 }
