@@ -1,0 +1,19 @@
+{
+    "name": "luisrovirosa/katapotter",
+    "description": "Kata Potter http://www.codingdojo.org/cgi-bin/index.pl?action=browse&id=KataPotter&revision=41",
+    "require": {
+        "phpunit/phpunit": "4.8"
+    },
+    "authors": [
+        {
+            "name": "Luis Rovirosa",
+            "email": "luisrovirosa@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "KataPotter\\": "src",
+            "KataPotter\\Test\\": "test"
+        }
+    }
+}
