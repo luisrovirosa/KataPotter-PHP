@@ -1,11 +1,21 @@
 <?php
 
-namespace KataPotter;
+namespace KataPotter\Test;
+
+use KataPotter\Basket;
+use KataPotter\Book;
 
 class KataPotterShould extends \PHPUnit_Framework_TestCase
 {
 
     // One book costs 8 €
+    /** @test */
+    public function one_book_costs_8_euros()
+    {
+        $book = new Book(1);
+        $basket = new Basket([$book]);
+        $this->assertEquals(8, $basket->price());
+    }
     // Two copies of the same book costs 16 €
     // Three copies of the same book costs 24 €
     // Four copies of the same book costs 32 €
