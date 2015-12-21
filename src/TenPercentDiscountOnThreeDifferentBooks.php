@@ -9,7 +9,7 @@ class TenPercentDiscountOnThreeDifferentBooks implements Discount
 
     public function match($books)
     {
-        return count($books) == 3 && $this->hasThreeDifferentBooks($books);
+        return $this->hasThreeDifferentBooks($books);
     }
 
     public function amount($books)
@@ -23,6 +23,12 @@ class TenPercentDiscountOnThreeDifferentBooks implements Discount
      */
     private function hasThreeDifferentBooks($books)
     {
-        return $books[0] != $books[1] && $books[1] != $books[2];
+        $bookNames = array_map(
+            function (Book $book) {
+                return $book->name();
+            }, $books
+        );
+
+        return count(array_unique($bookNames)) == 3;
     }
 }
