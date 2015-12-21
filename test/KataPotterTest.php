@@ -8,7 +8,6 @@ use KataPotter\Book;
 class KataPotterShould extends \PHPUnit_Framework_TestCase
 {
 
-    // One book costs 8 €
     /** @test */
     public function one_book_costs_8_euros()
     {
@@ -16,7 +15,15 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
         $basket = new Basket([$book]);
         $this->assertEquals(8, $basket->price());
     }
-    // Two copies of the same book costs 16 €
+
+    /** @test */
+    public function two_copies_of_the_same_book_costs_16_euros()
+    {
+        $book1 = new Book(1);
+        $book2 = new Book(1);
+        $basket = new Basket([$book1, $book2]);
+        $this->assertEquals(16, $basket->price());
+    }
     // Three copies of the same book costs 24 €
     // Four copies of the same book costs 32 €
     // Five copies of the same book costs 40 €
