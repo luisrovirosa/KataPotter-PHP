@@ -14,7 +14,8 @@ class GroupsGenerator
         // FIXME: Not done
         $groups = [
             new BooksGroup([$books]),
-            $this->createGroupWithDifferentBooks($books)
+            $this->createGroupWithMaxSize($books),
+            $this->createGroupPrioritizingGroupsOfFourElements($books)
         ];
 
         return $groups;
@@ -27,13 +28,28 @@ class GroupsGenerator
      * @param Books $books
      * @return BooksGroup
      */
-    private function createGroupWithDifferentBooks(Books $books)
+    private function createGroupWithMaxSize(Books $books)
     {
         $tmpBook = $books->duplicate();
         $groupOfBooks = [];
         do {
             $numbers = $tmpBook->names();
             $unique = array_keys(array_unique($numbers));
+
+            $groupOfBooks[] = $tmpBook->remove($unique);
+        } while ($tmpBook->size() > 0);
+
+        return new BooksGroup($groupOfBooks);
+    }
+
+    private function createGroupPrioritizingGroupsOfFourElements(Books $books)
+    {
+        $tmpBook = $books->duplicate();
+        $groupOfBooks = [];
+        do {
+            $numbers = $tmpBook->names();
+            $unique = array_keys(array_unique($numbers));
+            $unique = array_slice($unique, 0, 4);
 
             $groupOfBooks[] = $tmpBook->remove($unique);
         } while ($tmpBook->size() > 0);
