@@ -16,7 +16,7 @@ class Books
     {
         $this->assertAllElementsAreBooks($books);
         $this->books = $books;
-        $this->names = $this->generateNames($books);
+        $this->generateNames();
     }
 
     public function size()
@@ -27,6 +27,27 @@ class Books
     public function names()
     {
         return $this->names;
+    }
+
+    public function remove($indexes)
+    {
+        $books = array_map(
+            function ($index) {
+                $book = $this->books[$index];
+                unset($this->books[$index]);
+
+                return $book;
+            }, $indexes
+        );
+
+        $this->updateInternalData();
+
+        return new Books($books);
+    }
+
+    public function duplicate()
+    {
+        return new Books($this->books);
     }
 
     /**
@@ -43,16 +64,21 @@ class Books
     }
 
     /**
-     * @param Book[] $books
      * @return array
      */
-    private function generateNames($books)
+    private function generateNames()
     {
-        return array_map(
+        $this->names = array_map(
             function (Book $book) {
                 return $book->name();
-            }, $books
+            }, $this->books
         );
+    }
+
+    private function updateInternalData()
+    {
+        $this->books = array_values($this->books);
+        $this->generateNames();
     }
 
 }

@@ -34,7 +34,9 @@ class Discounts
         $groups = $this->generateGroups($books);
         $discounts = $this->calculateDiscounts($groups);
 
-        return max($discounts);
+        $max = max($discounts);
+
+        return $max;
     }
 
     /**

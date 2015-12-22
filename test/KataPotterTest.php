@@ -125,14 +125,13 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
             [[1, 2, 2], .95],
             [[1, 2, 3, 3], .9],
             [[1, 2, 3, 4, 4], .8],
-            //[[1, 2, 3, 4, 5, 5], 5 * 8 * .75 + 8],
         ];
     }
 
     /** @test */
     public function several_discounts()
     {
-        //$this->assertBasketCost([0, 0, 1, 1], 2 * 2 * 8 * .9);
+        $this->assertBasketCost([0, 0, 1, 1], 2 * 2 * 8 * .95);
     }
     // 2 copies of first book, 2 copies of second, 2 of the third, 1 of fourth and 1 of the fifth costs 51.2 €
 
