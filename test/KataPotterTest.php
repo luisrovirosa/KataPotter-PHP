@@ -11,6 +11,8 @@ use KataPotter\Discounts\NoDiscount;
 use KataPotter\Discounts\TenPercentDiscountOnThreeDifferentBooks;
 use KataPotter\Discounts\TwentyFivePercentDiscountOnFiveDifferentBooks;
 use KataPotter\Discounts\TwentyPercentDiscountOnFourDifferentBooks;
+use KataPotter\Groups\BiggestGroupPossible;
+use KataPotter\Groups\PrioritizeGroupsOfFourElements;
 use KataPotter\GroupsGenerator;
 
 class KataPotterShould extends \PHPUnit_Framework_TestCase
@@ -187,7 +189,12 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
                     new FivePercentDiscountOnTwoDifferentBooks(),
                     new NoDiscount()
                 ],
-                new GroupsGenerator()
+                new GroupsGenerator(
+                    [
+                        new BiggestGroupPossible(),
+                        new PrioritizeGroupsOfFourElements(),
+                    ]
+                )
             )
         );
     }

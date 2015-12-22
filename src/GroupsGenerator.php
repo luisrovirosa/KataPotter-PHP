@@ -2,7 +2,6 @@
 
 namespace KataPotter;
 
-use KataPotter\Groups\BiggestGroupPossible;
 use KataPotter\Groups\GroupGeneratorStrategy;
 
 class GroupsGenerator
@@ -14,11 +13,9 @@ class GroupsGenerator
      * GroupsGenerator constructor.
      * @param GroupGeneratorStrategy[] $strategies
      */
-    public function __construct()
+    public function __construct(array $strategies)
     {
-        $this->strategies = [
-            new BiggestGroupPossible(),
-        ];
+        $this->strategies = $strategies;
     }
 
     /**
@@ -27,10 +24,7 @@ class GroupsGenerator
      */
     public function generate(Books $books)
     {
-        // FIXME: Not done
-        $groups = [
-            $this->createGroupPrioritizingGroupsOfFourElements($books)
-        ];
+        $groups = [];
         foreach ($this->strategies as $strategy) {
             $groups = array_merge($groups, $strategy->generate($books));
         }
@@ -38,18 +32,4 @@ class GroupsGenerator
         return $groups;
     }
 
-    private function createGroupPrioritizingGroupsOfFourElements(Books $books)
-    {
-        $tmpBook = $books->duplicate();
-        $groupOfBooks = [];
-        do {
-            $numbers = $tmpBook->names();
-            $unique = array_keys(array_unique($numbers));
-            $unique = array_slice($unique, 0, 4);
-
-            $groupOfBooks[] = $tmpBook->remove($unique);
-        } while ($tmpBook->size() > 0);
-
-        return new BooksGroup($groupOfBooks);
-    }
 }
