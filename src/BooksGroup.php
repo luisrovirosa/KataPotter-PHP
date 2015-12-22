@@ -18,11 +18,18 @@ class BooksGroup
         $this->books = $books;
     }
 
-    /**
-     * @return Books[]
-     */
-    public function all()
+    public function calculateDiscount(Discounts $discounts)
     {
-        return $this->books;
+        $discounts = array_map(
+            function (Books $books) use ($discounts) {
+                $discount = $discounts->selectDiscount($books);
+
+                return $discount->amount($books);
+            },
+            $this->books
+        );
+
+        return array_sum($discounts);
     }
+
 }

@@ -29,14 +29,22 @@ class Discounts
         return $this->calculateBestDiscount($books);
     }
 
+    public function selectDiscount(Books $books)
+    {
+        foreach ($this->discounts as $discount) {
+            if ($discount->match($books)) {
+                return $discount;
+            }
+        }
+        throw new \Exception('No discount available');
+    }
+
     private function calculateBestDiscount($books)
     {
         $groups = $this->generateGroups($books);
-        $discounts = $this->calculateDiscounts($groups);
+        $discounts = $this->calculateDiscountOfEachGroup($groups);
 
-        $max = max($discounts);
-
-        return $max;
+        return max($discounts);
     }
 
     /**
@@ -52,39 +60,14 @@ class Discounts
      * @param $groupOfBooks
      * @return BooksGroup[]
      */
-    private function calculateDiscounts($groupOfBooks)
+    private function calculateDiscountOfEachGroup($groupOfBooks)
     {
         $discounts = array_map(
             function (BooksGroup $bookGroup) {
-                return $this->calculateGroupDiscount($bookGroup);
+                return $bookGroup->calculateDiscount($this);
             }, $groupOfBooks
         );
 
         return $discounts;
-    }
-
-    private function calculateGroupDiscount(BooksGroup $bookGroup)
-    {
-        $discounts = array_map(
-            function (Books $books) {
-                $discount = $this->selectDiscount($books);
-
-                return $discount->amount($books);
-            },
-            $bookGroup->all()
-        );
-
-        return array_sum($discounts);
-    }
-
-    private function selectDiscount(Books $books)
-    {
-
-        foreach ($this->discounts as $discount) {
-            if ($discount->match($books)) {
-                return $discount;
-            }
-        }
-        throw new \Exception('No discount available');
     }
 }
