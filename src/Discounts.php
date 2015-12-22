@@ -26,7 +26,10 @@ class Discounts
 
     public function calculate($books)
     {
-        return $this->calculateBestDiscount($books);
+        $groups = $this->generateGroups($books);
+        $discounts = $this->calculateDiscountOfEachGroup($groups);
+
+        return max($discounts);
     }
 
     public function selectDiscount(Books $books)
@@ -37,14 +40,6 @@ class Discounts
             }
         }
         throw new \Exception('No discount available');
-    }
-
-    private function calculateBestDiscount($books)
-    {
-        $groups = $this->generateGroups($books);
-        $discounts = $this->calculateDiscountOfEachGroup($groups);
-
-        return max($discounts);
     }
 
     /**
