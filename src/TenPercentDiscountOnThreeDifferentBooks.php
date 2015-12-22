@@ -7,12 +7,12 @@ use KataPotter\Test\Discount;
 class TenPercentDiscountOnThreeDifferentBooks implements Discount
 {
 
-    public function match($books)
+    public function match(Books $books)
     {
         return $this->hasThreeDifferentBooks($books);
     }
 
-    public function amount($books)
+    public function amount(Books $books)
     {
         return 10 / 100 * 3 * Book::PRICE;
     }
@@ -21,13 +21,9 @@ class TenPercentDiscountOnThreeDifferentBooks implements Discount
      * @param $books
      * @return bool
      */
-    private function hasThreeDifferentBooks($books)
+    private function hasThreeDifferentBooks(Books $books)
     {
-        $bookNames = array_map(
-            function (Book $book) {
-                return $book->name();
-            }, $books
-        );
+        $bookNames = $books->names();
 
         return count(array_unique($bookNames)) == 3;
     }

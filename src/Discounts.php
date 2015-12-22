@@ -16,8 +16,9 @@ class Discounts
     /**
      * Discounts constructor.
      * @param Discount[] $discounts
+     * @param GroupsGenerator $groupsGenerator
      */
-    public function __construct($discounts, GroupsGenerator $groupsGenerator)
+    public function __construct(array $discounts, GroupsGenerator $groupsGenerator)
     {
         $this->discounts = $discounts;
         $this->groupsGenerator = $groupsGenerator;
@@ -36,42 +37,47 @@ class Discounts
         return max($discounts);
     }
 
+    /**
+     * @param $books
+     * @return BookGroup[]
+     */
     private function generateGroups($books)
     {
         return $this->groupsGenerator->generate($books);
     }
 
     /**
-     * @param $groups
-     * @return array
+     * @param $groupOfBooks
+     * @return BookGroup[]
      */
-    private function calculateDiscounts($groups)
+    private function calculateDiscounts($groupOfBooks)
     {
         $discounts = array_map(
-            function ($group) {
-                return $this->calculateGroupDiscount($group);
-            }, $groups
+            function (BookGroup $bookGroup) {
+                return $this->calculateGroupDiscount($bookGroup);
+            }, $groupOfBooks
         );
 
         return $discounts;
     }
 
-    private function calculateGroupDiscount($group)
+    private function calculateGroupDiscount(BookGroup $bookGroup)
     {
         $discounts = array_map(
-            function ($books) {
+            function (Books $books) {
                 $discount = $this->selectDiscount($books);
 
                 return $discount->amount($books);
             },
-            $group
+            $bookGroup->all()
         );
 
         return array_sum($discounts);
     }
 
-    private function selectDiscount($books)
+    private function selectDiscount(Books $books)
     {
+
         foreach ($this->discounts as $discount) {
             if ($discount->match($books)) {
                 return $discount;

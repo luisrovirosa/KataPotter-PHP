@@ -3,26 +3,23 @@
 namespace KataPotter\Test;
 
 use KataPotter\Book;
+use KataPotter\Books;
 
 class FivePercentDiscountOnTwoDifferentBooks implements Discount
 {
-    public function match($books)
+    public function match(Books $books)
     {
         return $this->hasTwoDifferentBooks($books);
     }
 
-    public function amount($books)
+    public function amount(Books $books)
     {
         return 5 / 100 * 2 * Book::PRICE;
     }
 
-    private function hasTwoDifferentBooks($books)
+    private function hasTwoDifferentBooks(Books $books)
     {
-        $bookNames = array_map(
-            function (Book $book) {
-                return $book->name();
-            }, $books
-        );
+        $bookNames = $books->names();
 
         return count(array_unique($bookNames)) == 2;
     }

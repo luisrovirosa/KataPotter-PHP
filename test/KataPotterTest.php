@@ -4,6 +4,7 @@ namespace KataPotter\Test;
 
 use KataPotter\Basket;
 use KataPotter\Book;
+use KataPotter\Books;
 use KataPotter\Discounts;
 use KataPotter\GroupsGenerator;
 use KataPotter\TenPercentDiscountOnThreeDifferentBooks;
@@ -170,7 +171,7 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $bookNumbers
-     * @return Book[]
+     * @return Books
      */
     private function books(array $bookNumbers)
     {
@@ -179,6 +180,6 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
             $books[] = new Book($number);
         }
 
-        return $books;
+        return new Books($books);
     }
 }

@@ -5,11 +5,17 @@ namespace KataPotter;
 class GroupsGenerator
 {
 
-    public function generate($books)
+    /**
+     * @param $books
+     * @return BookGroup[]
+     */
+    public function generate(Books $books)
     {
         // FIXME: Not done
         $groups = [
-            [$books],
+            new BookGroup(
+                [$books]
+            ),
         ];
 
         return $groups;

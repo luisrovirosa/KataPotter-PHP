@@ -4,7 +4,7 @@ namespace KataPotter;
 
 class Basket
 {
-    /** @var Book[] */
+    /** @var Books */
     private $books;
     /**
      * @var Discounts
@@ -13,10 +13,10 @@ class Basket
 
     /**
      * Basket constructor.
-     * @param Book[] $books
+     * @param Books $books
      * @param Discounts $discounts
      */
-    public function __construct(array $books, Discounts $discounts)
+    public function __construct(Books $books, Discounts $discounts)
     {
         $this->books = $books;
         $this->discounts = $discounts;
@@ -48,6 +48,6 @@ class Basket
      */
     private function numberOfBooks()
     {
-        return count($this->books);
+        return $this->books->size();
     }
 }
