@@ -142,6 +142,23 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
         $this->assertBasketCost([1, 1, 2, 2, 3, 3, 4, 5], 2 * (8 * 4 * 0.8));
     }
 
+    /** @test */
+    public function crazy_test_case()
+    {
+        $this->markTestIncomplete('It\'s necessary better group generator for this one');
+        $bookNumbers = array_merge(
+            array_fill(0, 5, 1),
+            array_fill(0, 5, 2),
+            array_fill(0, 4, 3),
+            array_fill(0, 5, 4),
+            array_fill(0, 4, 5)
+        );
+        $this->assertBasketCost(
+            $bookNumbers,
+            3 * (8 * 5 * 0.75) + 2 * (8 * 4 * 0.8)
+        );
+    }
+
     /**
      * @param $bookNumbers
      * @param $expectedPrice
