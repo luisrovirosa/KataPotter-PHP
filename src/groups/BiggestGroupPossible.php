@@ -20,7 +20,7 @@ class BiggestGroupPossible implements GroupGeneratorStrategy
             $unique = array_keys(array_unique($numbers));
 
             $groupOfBooks[] = $tmpBook->remove($unique);
-        } while ($tmpBook->size() > 0);
+        } while ($tmpBook->hasBooks());
 
         return [new BooksGroup($groupOfBooks)];
     }

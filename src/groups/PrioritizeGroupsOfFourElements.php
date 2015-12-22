@@ -22,7 +22,7 @@ class PrioritizeGroupsOfFourElements implements GroupGeneratorStrategy
             $unique = array_slice($unique, 0, 4);
 
             $groupOfBooks[] = $tmpBook->remove($unique);
-        } while ($tmpBook->size() > 0);
+        } while ($tmpBook->hasBooks());
 
         return [new BooksGroup($groupOfBooks)];
     }

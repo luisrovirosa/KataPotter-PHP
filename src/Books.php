@@ -47,6 +47,11 @@ class Books
         return new Books($this->books);
     }
 
+    public function hasBooks()
+    {
+        return $this->size() > 0;
+    }
+
     /**
      * @param array $books
      * @throws \Exception
