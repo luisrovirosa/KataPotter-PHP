@@ -2,7 +2,7 @@
 
 namespace KataPotter;
 
-use KataPotter\Test\Discount;
+use KataPotter\Discounts\Discount;
 
 class Discounts
 {

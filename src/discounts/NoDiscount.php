@@ -1,6 +1,6 @@
 <?php
 
-namespace KataPotter\Test;
+namespace KataPotter\Discounts;
 
 use KataPotter\Books;
 

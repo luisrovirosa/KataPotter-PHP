@@ -1,8 +1,9 @@
 <?php
 
-namespace KataPotter;
+namespace KataPotter\Discounts;
 
-use KataPotter\Test\Discount;
+use KataPotter\Book;
+use KataPotter\Books;
 
 class TwentyPercentDiscountOnFourDifferentBooks implements Discount
 {

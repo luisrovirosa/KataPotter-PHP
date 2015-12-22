@@ -6,10 +6,12 @@ use KataPotter\Basket;
 use KataPotter\Book;
 use KataPotter\Books;
 use KataPotter\Discounts;
+use KataPotter\Discounts\FivePercentDiscountOnTwoDifferentBooks;
+use KataPotter\Discounts\NoDiscount;
+use KataPotter\Discounts\TenPercentDiscountOnThreeDifferentBooks;
+use KataPotter\Discounts\TwentyFivePercentDiscountOnFiveDifferentBooks;
+use KataPotter\Discounts\TwentyPercentDiscountOnFourDifferentBooks;
 use KataPotter\GroupsGenerator;
-use KataPotter\TenPercentDiscountOnThreeDifferentBooks;
-use KataPotter\TwentyFivePercentDiscountOnFiveDifferentBooks;
-use KataPotter\TwentyPercentDiscountOnFourDifferentBooks;
 
 class KataPotterShould extends \PHPUnit_Framework_TestCase
 {
@@ -133,9 +135,9 @@ class KataPotterShould extends \PHPUnit_Framework_TestCase
     {
         $this->assertBasketCost([1, 1, 2, 2], 2 * 2 * 8 * .95);
     }
-    // 2 copies of first book, 2 copies of second, 2 of the third, 1 of fourth and 1 of the fifth costs 51.2 €
+
     /** @test */
-    public function edge_cases()
+    public function two_discounts_of_four_books_are_better_than_one_of_five_and_another_of_three()
     {
         $this->assertBasketCost([1, 1, 2, 2, 3, 3, 4, 5], 2 * (8 * 4 * 0.8));
     }
