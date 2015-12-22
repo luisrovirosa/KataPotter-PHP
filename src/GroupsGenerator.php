@@ -7,15 +7,13 @@ class GroupsGenerator
 
     /**
      * @param $books
-     * @return BookGroup[]
+     * @return BooksGroup[]
      */
     public function generate(Books $books)
     {
         // FIXME: Not done
         $groups = [
-            new BookGroup(
-                [$books]
-            ),
+            new BooksGroup([$books]),
             $this->createGroupWithDifferentBooks($books)
         ];
 
@@ -27,7 +25,7 @@ class GroupsGenerator
      * Ex: 1,1,2,2,3,4,5 returns 1,2,3,4,5 and 1,2
      *
      * @param Books $books
-     * @return BookGroup
+     * @return BooksGroup
      */
     private function createGroupWithDifferentBooks(Books $books)
     {
@@ -40,6 +38,6 @@ class GroupsGenerator
             $groupOfBooks[] = $tmpBook->remove($unique);
         } while ($tmpBook->size() > 0);
 
-        return new BookGroup($groupOfBooks);
+        return new BooksGroup($groupOfBooks);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace KataPotter;
 
-class BookGroup
+class BooksGroup
 {
     /**
      * @var Books[]

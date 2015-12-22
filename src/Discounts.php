@@ -41,7 +41,7 @@ class Discounts
 
     /**
      * @param $books
-     * @return BookGroup[]
+     * @return BooksGroup[]
      */
     private function generateGroups($books)
     {
@@ -50,12 +50,12 @@ class Discounts
 
     /**
      * @param $groupOfBooks
-     * @return BookGroup[]
+     * @return BooksGroup[]
      */
     private function calculateDiscounts($groupOfBooks)
     {
         $discounts = array_map(
-            function (BookGroup $bookGroup) {
+            function (BooksGroup $bookGroup) {
                 return $this->calculateGroupDiscount($bookGroup);
             }, $groupOfBooks
         );
@@ -63,7 +63,7 @@ class Discounts
         return $discounts;
     }
 
-    private function calculateGroupDiscount(BookGroup $bookGroup)
+    private function calculateGroupDiscount(BooksGroup $bookGroup)
     {
         $discounts = array_map(
             function (Books $books) {
