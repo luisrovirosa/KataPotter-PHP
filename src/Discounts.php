@@ -8,14 +8,19 @@ class Discounts
 {
     /** @var Discount[] */
     private $discounts;
+    /**
+     * @var GroupsGenerator
+     */
+    private $groupsGenerator;
 
     /**
      * Discounts constructor.
      * @param Discount[] $discounts
      */
-    public function __construct($discounts)
+    public function __construct($discounts, GroupsGenerator $groupsGenerator)
     {
         $this->discounts = $discounts;
+        $this->groupsGenerator = $groupsGenerator;
     }
 
     public function calculate($books)
@@ -23,26 +28,32 @@ class Discounts
         return $this->calculateBestDiscount($books);
     }
 
-    private function selectDiscount($books)
-    {
-        foreach ($this->discounts as $discount) {
-            if ($discount->match($books)) {
-                return $discount;
-            }
-        }
-        throw new \Exception('No discount available');
-    }
-
     private function calculateBestDiscount($books)
     {
         $groups = $this->generateGroups($books);
+        $discounts = $this->calculateDiscounts($groups);
+
+        return max($discounts);
+    }
+
+    private function generateGroups($books)
+    {
+        return $this->groupsGenerator->generate($books);
+    }
+
+    /**
+     * @param $groups
+     * @return array
+     */
+    private function calculateDiscounts($groups)
+    {
         $discounts = array_map(
             function ($group) {
                 return $this->calculateGroupDiscount($group);
             }, $groups
         );
 
-        return max($discounts);
+        return $discounts;
     }
 
     private function calculateGroupDiscount($group)
@@ -59,13 +70,13 @@ class Discounts
         return array_sum($discounts);
     }
 
-    private function generateGroups($books)
+    private function selectDiscount($books)
     {
-        // FIXME: Not done
-        $groups = [
-            [$books],
-        ];
-
-        return $groups;
+        foreach ($this->discounts as $discount) {
+            if ($discount->match($books)) {
+                return $discount;
+            }
+        }
+        throw new \Exception('No discount available');
     }
 }
