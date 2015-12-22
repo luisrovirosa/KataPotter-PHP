@@ -33,14 +33,11 @@ class Books
     {
         $books = array_map(
             function ($index) {
-                $book = $this->books[$index];
-                unset($this->books[$index]);
-
-                return $book;
+                return $this->books[$index];
             }, $indexes
         );
 
-        $this->updateInternalData();
+        $this->removeBooks($indexes);
 
         return new Books($books);
     }
@@ -75,8 +72,14 @@ class Books
         );
     }
 
-    private function updateInternalData()
+    private function removeBooks($indexes)
     {
+        array_map(
+            function ($index) {
+                unset($this->books[$index]);
+            }, $indexes
+        );
+
         $this->books = array_values($this->books);
         $this->generateNames();
     }
