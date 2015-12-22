@@ -19,11 +19,6 @@ class Books
         $this->generateNames();
     }
 
-    public function size()
-    {
-        return count($this->books);
-    }
-
     public function names()
     {
         return $this->names;
@@ -42,6 +37,11 @@ class Books
         return new Books($books);
     }
 
+    public function price()
+    {
+        return $this->size() * Book::PRICE;
+    }
+
     public function duplicate()
     {
         return new Books($this->books);
@@ -50,6 +50,11 @@ class Books
     public function hasBooks()
     {
         return $this->size() > 0;
+    }
+
+    private function size()
+    {
+        return count($this->books);
     }
 
     /**

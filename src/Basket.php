@@ -32,7 +32,7 @@ class Basket
      */
     private function normalPrice()
     {
-        return $this->numberOfBooks() * Book::PRICE;
+        return $this->books->price();
     }
 
     /**
@@ -41,13 +41,5 @@ class Basket
     private function discount()
     {
         return $this->discounts->calculate($this->books);
-    }
-
-    /**
-     * @return int
-     */
-    private function numberOfBooks()
-    {
-        return $this->books->size();
     }
 }
